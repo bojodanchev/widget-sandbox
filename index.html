@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Salon - Before & After Widget Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><rect fill="%23f0f0f0" width="1200" height="600"/><circle fill="%23ddd" cx="200" cy="150" r="80"/><circle fill="%23ddd" cx="400" cy="200" r="60"/><circle fill="%23ddd" cx="600" cy="180" r="70"/><circle fill="%23ddd" cx="800" cy="160" r="50"/><circle fill="%23ddd" cx="1000" cy="190" r="65"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .cta-button {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .service-card p {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        /* Widget Integration Areas */
+        .widget-test-area {
+            background: #f8f9fa;
+            padding: 60px 0;
+            border-top: 3px solid #667eea;
+        }
+
+        .widget-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+            min-height: 400px;
+            border: 2px dashed #667eea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .widget-placeholder {
+            text-align: center;
+            color: #666;
+        }
+
+        .widget-placeholder h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .widget-placeholder p {
+            margin-bottom: 1.5rem;
+        }
+
+        .integration-code {
+            background: #f1f3f4;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #333;
+            border-left: 4px solid #667eea;
+            margin: 1rem 0;
+        }
+
+        .test-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .test-btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .test-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+
+        .test-btn.secondary {
+            background: #6c757d;
+        }
+
+        .test-btn.secondary:hover {
+            background: #5a6268;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">BeautyStudio Pro</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Transform Your Look</h1>
+            <p>Professional beauty services with stunning before & after results</p>
+            <a href="#services" class="cta-button">Book Now</a>
+        </div>
+    </section>
+
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💄</div>
+                    <h3>Makeup Transformation</h3>
+                    <p>Professional makeup application for special occasions, photoshoots, and everyday glamour.</p>
+                    <div class="service-price">$150</div>
+                    <button class="cta-button">Book Service</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💇‍♀️</div>
+                    <h3>Hair Styling</h3>
+                    <p>Complete hair makeover including cut, color, and styling for any occasion.</p>
+                    <div class="service-price">$200</div>
+                    <button class="cta-button">Book Service</button>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">✨</div>
+                    <h3>Skincare Treatment</h3>
+                    <p>Rejuvenating facial treatments and skincare routines for healthy, glowing skin.</p>
+                    <div class="service-price">$120</div>
+                    <button class="cta-button">Book Service</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Widget Testing Area -->
+    <section class="widget-test-area">
+        <div class="container">
+            <h2 class="section-title">Widget Testing Area</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                Use this area to test your before/after widget integration
+            </p>
+            
+            <!-- Widget Integration Point 1 -->
+            <div class="widget-container" id="widget-container-1">
+                <div class="widget-placeholder">
+                    <h3>Widget Integration Point 1</h3>
+                    <p>This is where your widget will be embedded for testing</p>
+                    <div class="integration-code">
+                        &lt;!-- Your widget code goes here --&gt;<br>
+                        &lt;div id="your-widget-container"&gt;&lt;/div&gt;<br>
+                        &lt;script src="your-widget.js"&gt;&lt;/script&gt;
+                    </div>
+                    <div class="test-buttons">
+                        <button class="test-btn" onclick="simulateWidgetLoad('widget-container-1')">Simulate Widget Load</button>
+                        <button class="test-btn secondary" onclick="clearWidget('widget-container-1')">Clear Widget</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget Integration Point 2 -->
+            <div class="widget-container" id="widget-container-2">
+                <div class="widget-placeholder">
+                    <h3>Widget Integration Point 2</h3>
+                    <p>Alternative placement for testing different layouts</p>
+                    <div class="integration-code">
+                        &lt;!-- Your widget code goes here --&gt;<br>
+                        &lt;div id="your-widget-container-2"&gt;&lt;/div&gt;<br>
+                        &lt;script src="your-widget.js"&gt;&lt;/script&gt;
+                    </div>
+                    <div class="test-buttons">
+                        <button class="test-btn" onclick="simulateWidgetLoad('widget-container-2')">Simulate Widget Load</button>
+                        <button class="test-btn secondary" onclick="clearWidget('widget-container-2')">Clear Widget</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Widget Integration Point 3 - Inline with content -->
+            <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin: 2rem 0;">
+                <h3 style="text-align: center; margin-bottom: 1rem;">Try Our Virtual Makeover Tool</h3>
+                <p style="text-align: center; color: #666; margin-bottom: 2rem;">
+                    See how you'll look with our professional makeup services
+                </p>
+                <div class="widget-container" id="widget-container-3" style="min-height: 300px; border: 2px dashed #ff6b6b;">
+                    <div class="widget-placeholder">
+                        <h3>Inline Widget Integration</h3>
+                        <p>Widget embedded within content flow</p>
+                        <div class="test-buttons">
+                            <button class="test-btn" onclick="simulateWidgetLoad('widget-container-3')">Load Widget</button>
+                            <button class="test-btn secondary" onclick="clearWidget('widget-container-3')">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>123 Beauty Street</p>
+                    <p>New York, NY 10001</p>
+                    <p>Phone: (555) 123-4567</p>
+                    <p>Email: info@beautystudiopro.com</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <a href="#">Makeup</a>
+                    <a href="#">Hair Styling</a>
+                    <a href="#">Skincare</a>
+                    <a href="#">Bridal Packages</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <a href="#">Instagram</a>
+                    <a href="#">Facebook</a>
+                    <a href="#">Twitter</a>
+                    <a href="#">TikTok</a>
+                </div>
+            </div>
+            <p>&copy; 2024 BeautyStudio Pro. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Widget testing functions
+        function simulateWidgetLoad(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div style="text-align: center; padding: 2rem;">
+                    <h3 style="color: #667eea; margin-bottom: 1rem;">🎉 Widget Loaded Successfully!</h3>
+                    <p style="color: #666; margin-bottom: 1.5rem;">This simulates your widget being loaded</p>
+                    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin: 1rem 0;">
+                        <h4 style="color: #333; margin-bottom: 1rem;">Widget Features:</h4>
+                        <ul style="text-align: left; color: #666; max-width: 300px; margin: 0 auto;">
+                            <li>Before/After Image Comparison</li>
+                            <li>Interactive Controls</li>
+                            <li>Responsive Design</li>
+                            <li>Custom Styling</li>
+                        </ul>
+                    </div>
+                    <button class="test-btn secondary" onclick="clearWidget('${containerId}')">Clear Widget</button>
+                </div>
+            `;
+        }
+
+        function clearWidget(containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = `
+                <div class="widget-placeholder">
+                    <h3>Widget Integration Point</h3>
+                    <p>This is where your widget will be embedded for testing</p>
+                    <div class="integration-code">
+                        &lt;!-- Your widget code goes here --&gt;<br>
+                        &lt;div id="your-widget-container"&gt;&lt;/div&gt;<br>
+                        &lt;script src="your-widget.js"&gt;&lt;/script&gt;
+                    </div>
+                    <div class="test-buttons">
+                        <button class="test-btn" onclick="simulateWidgetLoad('${containerId}')">Simulate Widget Load</button>
+                        <button class="test-btn secondary" onclick="clearWidget('${containerId}')">Clear Widget</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add some interactivity to service cards
+        document.querySelectorAll('.service-card .cta-button').forEach(button => {
+            button.addEventListener('click', function() {
+                alert('This would normally open a booking form or widget integration!');
+            });
+        });
+    </script>
+</body>
+</html>
