@@ -29,6 +29,31 @@ The sandbox provides three different integration points for testing:
 
 ## How to Integrate Your Widget
 
+### Production Widget Integration (Ready to Use!)
+
+The sandbox now includes **production-ready before/after widgets** that you can test immediately:
+
+#### Shadow DOM Variant (Default - Best Performance)
+```html
+<script async src="https://before-after-embed.vercel.app/embed.js"
+    data-embed-id="bojo"
+    data-theme="auto"
+    data-max-width="400px"
+    data-align="center">
+</script>
+```
+
+#### Card Variant (Iframe - CSP Compatible)
+```html
+<script async src="https://before-after-embed.vercel.app/embed.js"
+    data-embed-id="bojo"
+    data-variant="card"
+    data-theme="auto"
+    data-max-width="500px"
+    data-align="center">
+</script>
+```
+
 ### Method 1: Direct HTML Integration
 Replace the placeholder content in any widget container with your widget code:
 
